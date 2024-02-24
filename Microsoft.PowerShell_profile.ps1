@@ -14,8 +14,8 @@
 ### more information about execution policies, run Get-Help about_Execution_Policies.
 
 #check for updates
-<# try{
-    $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
+ try{
+    $url = ""
     $oldhash = Get-FileHash $PROFILE
     Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
     $newhash = Get-FileHash "$env:temp/Microsoft.PowerShell_profile.ps1"
@@ -23,8 +23,8 @@
         Get-Content "$env:temp/Microsoft.PowerShell_profile.ps1" | Set-Content $PROFILE
         . $PROFILE
         return
-    } #>
-#}
+    } 
+}
 catch {
     Write-Error "unable to check for `$profile updates"
 }
