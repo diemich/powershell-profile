@@ -12,6 +12,10 @@ irm "https://github.com/ChrisTitusTech/powershell-profile/raw/main/setup.ps1" | 
 irm "Hola" | iex
 ```
 
+```
+weqwewqwd
+
+```
 ## 🛠️ Fix the Missing Font
 
 After running the script, you'll find a downloaded `cove.zip` file in the folder you executed the script from. Follow these steps to install the required nerd fonts:
