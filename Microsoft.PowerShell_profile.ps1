@@ -1,6 +1,6 @@
 ### PowerShell template profile 
-### Version 1.03 - Tim Sneath <tim@sneath.org>
-### From https://gist.github.com/timsneath/19867b12eee7fd5af2ba
+### based on https://gist.github.com/timsneath/19867b12eee7fd5af2ba
+### https://github.com/ChrisTitusTech/powershell-profile
 ###
 ### This file should be stored in $PROFILE.CurrentUserAllHosts
 ### If $PROFILE.CurrentUserAllHosts doesn't exist, you can make one with the following:
@@ -14,7 +14,7 @@
 ### more information about execution policies, run Get-Help about_Execution_Policies.
 
 #check for updates
-try{
+<# try{
     $url = "https://raw.githubusercontent.com/ChrisTitusTech/powershell-profile/main/Microsoft.PowerShell_profile.ps1"
     $oldhash = Get-FileHash $PROFILE
     Invoke-RestMethod $url -OutFile "$env:temp/Microsoft.PowerShell_profile.ps1"
@@ -23,8 +23,8 @@ try{
         Get-Content "$env:temp/Microsoft.PowerShell_profile.ps1" | Set-Content $PROFILE
         . $PROFILE
         return
-    }
-}
+    } #>
+#}
 catch {
     Write-Error "unable to check for `$profile updates"
 }
@@ -51,7 +51,7 @@ function sha1 { Get-FileHash -Algorithm SHA1 $args }
 function sha256 { Get-FileHash -Algorithm SHA256 $args }
 
 # Quick shortcut to start notepad
-function n { notepad $args }
+function n { notepad++ $args }
 
 # Drive shortcuts
 function HKLM: { Set-Location HKLM: }
@@ -112,7 +112,7 @@ function Edit-Profile {
     if ($host.Name -match "ise") {
         $psISE.CurrentPowerShellTab.Files.Add($profile.CurrentUserAllHosts)
     } else {
-        notepad $profile.CurrentUserAllHosts
+        notepad++ $profile.CurrentUserAllHosts
     }
 }
 
@@ -178,8 +178,21 @@ function uptime {
     }
 }
 
-function reload-profile {
-    & $profile
+#function reload-profile {
+#    & $profile
+#}
+function update-Profile {
+    @(
+        $Profile.AllUsersAllHosts,
+        $Profile.AllUsersCurrentHost,
+        $Profile.CurrentUserAllHosts,
+        $Profile.CurrentUserCurrentHost
+    ) | ForEach-Object {
+        if(Test-Path $_){
+            Write-Verbose "Running $_"
+            . $_
+        }
+    }
 }
 function find-file($name) {
     Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
@@ -229,10 +242,10 @@ function pgrep($name) {
 # Be aware that if you are missing these lines from your profile, tab completion
 # for `choco` will not function.
 # See https://ch0.co/tab-completion for details.
-$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
-if (Test-Path($ChocolateyProfile)) {
-    Import-Module "$ChocolateyProfile"
-}
+#$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+#if (Test-Path($ChocolateyProfile)) {
+#    Import-Module "$ChocolateyProfile"
+#}
 
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
