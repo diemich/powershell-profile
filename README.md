@@ -7,15 +7,10 @@ A stylish and functional PowerShell profile that looks and feels almost as good 
 Execute the following command in an elevated PowerShell window to install the PowerShell profile:
 
 ```
-irm "https://github.com/ChrisTitusTech/powershell-profile/raw/main/setup.ps1" | iex
-
-irm "Hola" | iex
-```
+irm "https://raw.githubusercontent.com/diemich/pwsh-profile/main/setup.ps1" | iex
 
 ```
-weqwewqwd
 
-```
 ## 🛠️ Fix the Missing Font
 
 After running the script, you'll find a downloaded `cove.zip` file in the folder you executed the script from. Follow these steps to install the required nerd fonts:
